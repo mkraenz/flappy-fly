@@ -1,0 +1,20 @@
+sudo: false
+language: node_js
+node_js:
+  - "12"
+
+install:
+  - npm install
+script:
+  - npm run build
+
+before_deploy:
+  # HACK: Delete "build" from gitignore because github pages uses `git add --all`
+  - ./deployment/delete-build-dir-from-gitignore.sh
+deploy:
+  - provider: pages
+    github_token: ${GITHUB_TOKEN} # Set in the settings page of travis repository, as a secure variable
+    keep_history: true
+    skip_cleanup: true
+    on:
+      branch: master
