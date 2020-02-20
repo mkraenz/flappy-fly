@@ -35,6 +35,14 @@ export class Player extends Physics.Arcade.Sprite {
         );
         this.setOffset(Cfg.bodyOffset.x, Cfg.bodyOffset.y);
         this.setDepth(99)
+        scene.anims.create({
+            key: "flap",
+            frames: scene.anims.generateFrameNames(Image.Player),
+            frameRate: 8,
+            yoyo:true,
+            repeat: -1
+        });
+        this.play("flap");
     }
 
     public enableInput() {
