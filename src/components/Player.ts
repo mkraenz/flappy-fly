@@ -34,13 +34,13 @@ export class Player extends Physics.Arcade.Sprite {
             this.height * Cfg.bodySizeFactor.y
         );
         this.setOffset(Cfg.bodyOffset.x, Cfg.bodyOffset.y);
-        this.setDepth(99)
+        this.setDepth(99);
         scene.anims.create({
             key: "flap",
             frames: scene.anims.generateFrameNames(Image.Player),
             frameRate: 8,
-            yoyo:true,
-            repeat: -1
+            yoyo: true,
+            repeat: -1,
         });
         this.play("flap");
     }
@@ -57,29 +57,30 @@ export class Player extends Physics.Arcade.Sprite {
     public setPlaying() {
         this.enableInput();
         this.setGravityY(0);
+        this.flap();
     }
 
     public update() {
-        const angle = this.getAnimationAngle()
+        const angle = this.getAnimationAngle();
         this.setAngle(angle);
     }
-    
+
     private flap() {
         this.setVelocityY(this.body.velocity.y - Cfg.flapForce);
-        this.scene.sound.play(Sound.Jump)
+        this.scene.sound.play(Sound.Jump);
     }
-    
-    private getAnimationAngle(){
+
+    private getAnimationAngle() {
         const yVelocity = this.body.velocity.y;
-        if(yVelocity > 250){
+        if (yVelocity > 250) {
             return 30;
         }
-        if(yVelocity > 0) {
-            return Math.floor(yVelocity / 250 * 30 ) // [0, 30]
-        } 
-        if(yVelocity > -100 ){
-            return -Math.abs(Math.floor(yVelocity / 100 * 30)) // [-30, 0]
+        if (yVelocity > 0) {
+            return Math.floor((yVelocity / 250) * 30); // [0, 30]
         }
-        return -30
+        if (yVelocity > -100) {
+            return -Math.abs(Math.floor((yVelocity / 100) * 30)); // [-30, 0]
+        }
+        return -30;
     }
 }
