@@ -1,4 +1,5 @@
 import { Input, Scene } from "phaser";
+import { Sound } from "../assets/keys";
 import { Background } from "../components/Background";
 import { GameState } from "../components/GameState";
 import { Ground } from "../components/Ground";
@@ -12,7 +13,7 @@ export class MainScene extends Scene {
     private pipes!: Pipes;
     private player!: Player;
     private state: GameState = GameState.Start;
-    private startKey!: Input.Keyboard.Key;
+    private key!: Input.Keyboard.Key;
 
     constructor() {
         super({
@@ -24,47 +25,74 @@ export class MainScene extends Scene {
         this.background = new Background(this);
         this.ground = new Ground(this);
         this.player = new Player(this);
-        this.setStartInput();
+        this.setStartStateInput();
     }
 
     public update() {
+        if (this.state === GameState.Stop) {
+            return;
+        }
         this.ground.update();
         this.background.update();
         if (this.state === GameState.Playing) {
             this.pipes.update();
+            this.player.update();
         }
     }
 
-    private setStartInput() {
-        const onStartInput = () => this.play(this.player);
-        this.input.on("pointerup", onStartInput);
-        this.startKey = this.input.keyboard.addKey(
-            Input.Keyboard.KeyCodes.SPACE
-        );
-        this.startKey.onDown = onStartInput;
+    private setStartStateInput() {
+        const play = () => this.play(this.player);
+        this.setInput(play);
     }
 
-    private unsetStartInput() {
+    private setStopStateInput() {
+        const restart = () => this.restart();
+        this.setInput(restart);
+    }
+
+    private setInput(onInput: () => void) {
+        this.input.on("pointerup", onInput);
+        this.key = this.input.keyboard.addKey(Input.Keyboard.KeyCodes.SPACE);
+        this.key.onDown = onInput;
+    }
+
+    private unsetInput() {
         this.input.removeAllListeners();
     }
 
     private play(player: Player) {
         this.state = GameState.Playing;
-        this.unsetStartInput();
+        this.unsetInput();
         player.setPlaying();
 
         const score = new Score(this);
         this.pipes = new Pipes(this, score);
         const collider = this.physics.add.collider(player, [
             ...this.pipes.getPipes(),
-            this.ground,
+            ...this.ground.getTiles(),
         ]);
         collider.collideCallback = () => {
-            this.restart();
+            this.stop();
         };
     }
 
+    private stop() {
+        this.state = GameState.Stop;
+        this.unsetInput();
+        this.disablePhysics();
+        this.setStopStateInput();
+        this.sound.play(Sound.Die);
+    }
+
+    private disablePhysics() {
+        const disableBody = (x: { disableBody: () => void }) => x.disableBody();
+        disableBody(this.player);
+        this.pipes.getPipes().map(disableBody);
+        this.ground.getTiles().map(disableBody);
+    }
+
     private restart() {
+        this.state = GameState.Start;
         this.scene.restart();
     }
 }

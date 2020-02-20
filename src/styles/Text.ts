@@ -3,7 +3,7 @@ import { Color } from "./Color";
 
 export const TextConfig = {
     lg: {
-        font: "32px Gothic",
+        font: "40px Gothic",
         fill: "#000000",
     },
     sm: {

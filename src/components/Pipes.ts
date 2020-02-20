@@ -3,12 +3,10 @@ import { Pipe } from "./Pipe";
 import { PipePair } from "./PipePair";
 
 const Cfg = {
-    imgWidth: 64,
-    imgHeight: 862,
-    speed: 0.3,
-    xOffset: 300,
-    yOffset: 500,
-    initialXOffset: 200,
+    xOffset: 200,
+    topToBottomPipeOffset: 200,
+    initialXOffset: 300,
+    minTopY: 100,
 };
 
 interface IScore {
@@ -38,11 +36,15 @@ export class Pipes {
         const height = this.scene.scale.height;
 
         for (let i = 0; i < width / Cfg.xOffset; i++) {
-            const topY = (height / 2) * Math.sin(i);
+            const topY = (height / 2) * Math.abs(Math.sin(i)) + Cfg.minTopY;
             const x =
                 this.scene.scale.width + Cfg.initialXOffset + i * Cfg.xOffset;
             const topPipe = new Pipe(this.scene, x, topY, true);
-            const bottomPipe = new Pipe(this.scene, x, topY + Cfg.yOffset);
+            const bottomPipe = new Pipe(
+                this.scene,
+                x,
+                topY + Cfg.topToBottomPipeOffset
+            );
             this.pipePairs.push(new PipePair(topPipe, bottomPipe, score));
         }
     }

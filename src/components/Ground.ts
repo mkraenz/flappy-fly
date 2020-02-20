@@ -1,33 +1,21 @@
-import { Physics, Scene } from "phaser";
-import { Image } from "../assets/keys";
-import { gameConfig } from "../game-config";
+import { Scene } from "phaser";
+import { GroundTile } from "./GroundTile";
 
-const Cfg = {
-    imgHeight: 208,
-    imgWidth: 3072,
-    scale: 0.5,
-    speed: 100,
-};
+export class Ground {
+    private tile1: GroundTile;
+    private tile2: GroundTile;
 
-export class Ground extends Physics.Arcade.Image {
     constructor(scene: Scene) {
-        super(
-            scene,
-            scene.scale.width /2,
-            scene.scale.height - Cfg.imgHeight * Cfg.scale /4,
-            Image.Ground
-        );
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
-        this.setScale(Cfg.scale)
-        this.setGravityY(-gameConfig.physics?.arcade?.gravity?.y!);
-        this.setVelocityX(-Cfg.speed);
+        this.tile1 = new GroundTile(scene, 0);
+        this.tile2 = new GroundTile(scene, scene.scale.width);
     }
 
     public update() {
-        // TODO needs rework
-        if (this.x + Cfg.imgWidth * Cfg.scale / 2 < this.scene.scale.width) {
-            this.x = this.scene.scale.width / 2;
-        }
+        this.tile1.update();
+        this.tile2.update();
+    }
+
+    public getTiles() {
+        return [this.tile1, this.tile2];
     }
 }

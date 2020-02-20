@@ -2,7 +2,45 @@ import { GameObjects, Scene } from "phaser";
 import { Image, Sound } from "../assets/keys";
 import { Color, toHex } from "../styles/Color";
 import { setDefaultTextStyle } from "../styles/Text";
-import { MainScene } from "./MainScene";
+import { BgmScene } from "./BgmScene";
+
+const sounds: Array<{ key: Sound; filename: string }> = [
+    {
+        key: Sound.Bgm,
+        filename: "christmas-synths.mp3",
+    },
+    {
+        key: Sound.Die,
+        filename: "retro_die_03.mp3",
+    },
+    {
+        key: Sound.Coin1,
+        filename: "coin1.wav",
+    },
+    {
+        key: Sound.Coin2,
+        filename: "coin2.wav",
+    },
+    {
+        key: Sound.Jump,
+        filename: "jump.mp3",
+    },
+];
+
+const images: Array<{ key: Image; filename: string }> = [
+    {
+        key: Image.Background,
+        filename: "ocean-sky-background.png",
+    },
+    {
+        key: Image.Ground,
+        filename: "ground.png",
+    },
+    {
+        key: Image.Pipe,
+        filename: "pipe.png",
+    },
+];
 
 export class LoadingScene extends Scene {
     private halfWidth!: number;
@@ -10,7 +48,7 @@ export class LoadingScene extends Scene {
 
     constructor() {
         super({
-            key: "Loading",
+            key: "LoadingScene",
         });
     }
 
@@ -59,7 +97,7 @@ export class LoadingScene extends Scene {
         this.load.on("progress", this.getProgressBarFiller(progressBar));
         this.load.on("fileprogress", this.getAssetTextWriter(assetText));
         this.load.on("complete", () => {
-            this.scene.add("MainScene", MainScene, true);
+            this.scene.add("BgmScene", BgmScene, true);
             this.scene.remove(this);
         });
     }
@@ -88,33 +126,17 @@ export class LoadingScene extends Scene {
     }
 
     private preloadAllAssets() {
-        const imageDir = "./assets/images";
-        this.load.image(Image.Ground, `${imageDir}/ground.png`);
-        this.load.image(
-            Image.Background,
-            `${imageDir}/ocean-sky-background.png`
+        const imageDir = "./assets/images/";
+        images.forEach(image =>
+            this.load.image(image.key, `${imageDir}${image.filename}`)
         );
-        this.load.image(Image.Pipe, `${imageDir}/pipe.png`);
         this.load.spritesheet(Image.Player, `${imageDir}/fly.sprite.png`, {
             frameWidth: 508 / 2,
             frameHeight: 183,
         });
-        const soundsDir = "./assets/sounds";
-        this.load.audio(
-            Sound.BallHitsFirstPlayer,
-            `${soundsDir}/4390__noisecollector__a-flappy-bird-cloneblipf-4.wav`
-        );
-        this.load.audio(
-            Sound.BallHitsSecondPlayer,
-            `${soundsDir}/4391__noisecollector__a-flappy-bird-cloneblipf-5.wav`
-        );
-        this.load.audio(
-            Sound.BallHitsWall,
-            `${soundsDir}/4389__noisecollector__a-flappy-bird-cloneblipf-3.wav`
-        );
-        this.load.audio(
-            Sound.Scored,
-            `${soundsDir}/4365__noisecollector__a-flappy-bird-cloneblipa5.wav`
+        const soundsDir = "./assets/sounds/";
+        sounds.forEach(sound =>
+            this.load.audio(sound.key, `${soundsDir}${sound.filename}`)
         );
     }
 

@@ -1,4 +1,5 @@
 import { GameObjects, Scene } from "phaser";
+import { Sound } from "../assets/keys";
 import { TextConfig } from "../styles/Text";
 
 const Cfg = {
@@ -21,6 +22,9 @@ export class Score extends GameObjects.Text {
     public increase() {
         this.score++;
         this.draw();
+        this.score % 5 === 0
+            ? this.scene.sound.play(Sound.Coin1)
+            : this.scene.sound.play(Sound.Coin2);
     }
 
     private draw() {
