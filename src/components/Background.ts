@@ -4,7 +4,7 @@ import { Image } from "../assets/keys";
 const Cfg = {
     imgWidth: 3072,
     imgHeight: 1536,
-    speed: 0.05,
+    speed: 0.1,
 };
 
 export class Background extends GameObjects.Image {

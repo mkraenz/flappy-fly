@@ -1,13 +1,13 @@
 import { Input, Physics, Scene } from "phaser";
 import { Image } from "../assets/keys";
 import { PlayerCfg } from "../config";
+import { gameConfig } from "../game-config";
 
 const Cfg = {
     imgScale: 0.3,
     maxVelocityY: 2000,
     flapForce: 700,
     x: PlayerCfg.x,
-    mass: 500,
 };
 
 export class Player extends Physics.Arcade.Sprite {
@@ -20,18 +20,21 @@ export class Player extends Physics.Arcade.Sprite {
         this.setScale(Cfg.imgScale)
             .setMaxVelocity(0, Cfg.maxVelocityY)
             .setCollideWorldBounds()
-            .setMass(Cfg.mass);
-        this.setInput();
+        this.setGravityY(-gameConfig.physics?.arcade?.gravity?.y!)
     }
 
-    private setInput() {
-        // TODO replace by mouse click / screen touch
+    public enableInput() {
         const onInput = () => this.flap();
         this.scene.input.on("pointerup", onInput);
         this.jump = this.scene.input.keyboard.addKey(
             Input.Keyboard.KeyCodes.SPACE
         );
         this.jump.onDown = onInput;
+    }
+
+    public setPlaying() {
+        this.enableInput();
+        this.setGravityY(0)
     }
 
     private flap() {

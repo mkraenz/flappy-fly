@@ -7,7 +7,7 @@ const Cfg = {
     imgHeight: 862,
     speed: 0.3,
     xOffset: 300,
-    yOffset: 200,
+    yOffset: 500,
     initialXOffset: 200,
 };
 
@@ -39,17 +39,10 @@ export class Pipes {
 
         for (let i = 0; i < width / Cfg.xOffset; i++) {
             const topY = (height / 2) * Math.sin(i);
-            const topPipe = new Pipe(
-                this.scene,
-                Cfg.initialXOffset + i * Cfg.xOffset,
-                topY,
-                true
-            );
-            const bottomPipe = new Pipe(
-                this.scene,
-                Cfg.initialXOffset + i * Cfg.xOffset,
-                topY + Cfg.yOffset
-            );
+            const x =
+                this.scene.scale.width + Cfg.initialXOffset + i * Cfg.xOffset;
+            const topPipe = new Pipe(this.scene, x, topY, true);
+            const bottomPipe = new Pipe(this.scene, x, topY + Cfg.yOffset);
             this.pipePairs.push(new PipePair(topPipe, bottomPipe, score));
         }
     }
