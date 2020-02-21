@@ -12,3 +12,8 @@ export enum Image {
     Player = "player",
     Pipe = "pipe",
 }
+
+export enum Anims {
+    Fly = "fly",
+    Die = "die",
+}

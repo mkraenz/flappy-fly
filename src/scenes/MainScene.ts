@@ -14,6 +14,7 @@ export class MainScene extends Scene {
     private player!: Player;
     private state: GameState = GameState.Start;
     private key!: Input.Keyboard.Key;
+    private score!: Score;
 
     constructor() {
         super({
@@ -29,7 +30,7 @@ export class MainScene extends Scene {
     }
 
     public update() {
-        if (this.state === GameState.Stop) {
+        if (this.state === GameState.Die) {
             return;
         }
         this.ground.update();
@@ -43,11 +44,6 @@ export class MainScene extends Scene {
     private setStartStateInput() {
         const play = () => this.play(this.player);
         this.setInput(play);
-    }
-
-    private setStopStateInput() {
-        const restart = () => this.restart();
-        this.setInput(restart);
     }
 
     private setInput(onInput: () => void) {
@@ -65,28 +61,28 @@ export class MainScene extends Scene {
         this.unsetInput();
         player.setPlaying();
 
-        const score = new Score(this);
-        this.pipes = new Pipes(this, score);
+        this.score = new Score(this);
+        this.pipes = new Pipes(this, this.score);
         const collider = this.physics.add.collider(player, [
             ...this.pipes.getPipes(),
             ...this.ground.getTiles(),
         ]);
         collider.collideCallback = () => {
-            this.stop();
+            this.die();
         };
     }
 
-    private stop() {
-        this.state = GameState.Stop;
+    private die() {
+        this.state = GameState.Die;
         this.unsetInput();
+        this.score.save();
+        this.player.die(() => this.restart());
         this.disablePhysics();
-        this.setStopStateInput();
         this.sound.play(Sound.Die);
     }
 
     private disablePhysics() {
         const disableBody = (x: { disableBody: () => void }) => x.disableBody();
-        disableBody(this.player);
         this.pipes.getPipes().map(disableBody);
         this.ground.getTiles().map(disableBody);
     }

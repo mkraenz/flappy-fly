@@ -1,5 +1,5 @@
 import { Input, Physics, Scene } from "phaser";
-import { Image, Sound } from "../assets/keys";
+import { Anims, Image, Sound } from "../assets/keys";
 import { PlayerCfg } from "../config";
 import { gameConfig } from "../game-config";
 
@@ -16,6 +16,7 @@ const Cfg = {
         x: 80,
         y: 40,
     },
+    dieOffsetY: 500,
 };
 
 export class Player extends Physics.Arcade.Sprite {
@@ -35,14 +36,8 @@ export class Player extends Physics.Arcade.Sprite {
         );
         this.setOffset(Cfg.bodyOffset.x, Cfg.bodyOffset.y);
         this.setDepth(99);
-        scene.anims.create({
-            key: "flap",
-            frames: scene.anims.generateFrameNames(Image.Player),
-            frameRate: 8,
-            yoyo: true,
-            repeat: -1,
-        });
-        this.play("flap");
+        this.addAnims(scene);
+        this.play(Anims.Fly);
     }
 
     public enableInput() {
@@ -55,6 +50,7 @@ export class Player extends Physics.Arcade.Sprite {
     }
 
     public setPlaying() {
+        this.setCollideWorldBounds();
         this.enableInput();
         this.setGravityY(0);
         this.flap();
@@ -63,6 +59,50 @@ export class Player extends Physics.Arcade.Sprite {
     public update() {
         const angle = this.getAnimationAngle();
         this.setAngle(angle);
+    }
+
+    public die(finishedCb: () => void) {
+        this.disableBody();
+        this.anims.play(Anims.Die)
+        setTimeout(() => {
+            this.enableBody(false, this.x, this.y, true, true);
+            this.setVelocityY(-1000);
+            this.setCollideWorldBounds(false);
+            const maybeFinish = () => {
+                return this.y >
+                    this.scene.scale.height +
+                        this.displayHeight +
+                        Cfg.dieOffsetY
+                    ? finishedCb()
+                    : setTimeout(maybeFinish, 20);
+            };
+            setTimeout(maybeFinish, 1000);
+        }, 700);
+    }
+
+    private addAnims(scene: Scene) {
+        scene.anims.create({
+            key: Anims.Fly,
+            frames: scene.anims.generateFrameNames(Image.Player,
+                {
+                    start: 0,
+                    end: 1
+                }),
+            frameRate: 8,
+            yoyo: true,
+            repeat: -1,
+        });
+        scene.anims.create({
+            key: Anims.Die,
+            frames: scene.anims.generateFrameNames(Image.Player,
+                {
+                    start: 2,
+                    end: 2
+                }),
+            frameRate: 8,
+            yoyo: true,
+            repeat: -1,
+        });
     }
 
     private flap() {

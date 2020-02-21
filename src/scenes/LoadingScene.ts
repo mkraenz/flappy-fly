@@ -130,10 +130,14 @@ export class LoadingScene extends Scene {
         images.forEach(image =>
             this.load.image(image.key, `${imageDir}${image.filename}`)
         );
-        this.load.spritesheet(Image.Player, `${imageDir}/fly.sprite.png`, {
-            frameWidth: 508 / 2,
-            frameHeight: 183,
-        });
+        this.load.spritesheet(
+            Image.Player,
+            `${imageDir}/flappy-fly.sprite.png`,
+            {
+                frameWidth: 786 / 3,
+                frameHeight: 218,
+            }
+        );
         const soundsDir = "./assets/sounds/";
         sounds.forEach(sound =>
             this.load.audio(sound.key, `${soundsDir}${sound.filename}`)
