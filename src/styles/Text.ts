@@ -3,11 +3,11 @@ import { Color } from "./Color";
 
 export const TextConfig = {
     lg: {
-        font: "40px Gothic",
+        font: "120px The_Kids_Mraker",
         fill: "#000000",
     },
-    sm: {
-        font: "16px Gothic",
+    md: {
+        font: "60px The_Kids_Mraker",
         fill: "#000000",
     },
     debug: {
@@ -17,4 +17,4 @@ export const TextConfig = {
 };
 
 export const setDefaultTextStyle = (text: GameObjects.Text) =>
-    text.setStyle(TextConfig.lg).setColor(Color.Black);
+    text.setStyle(TextConfig.md).setColor(Color.Grey);

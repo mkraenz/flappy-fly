@@ -1,10 +1,14 @@
-[![Build Status](https://travis-ci.com/proSingularity/a-flappy-bird-clone.svg?branch=master)](https://travis-ci.com/proSingularity/a-flappy-bird-clone)
+[![Build Status](https://travis-ci.com/proSingularity/flappy-fly.svg?branch=master)](https://travis-ci.com/proSingularity/flappy-fly)
 
 # A Flappy Bird Clone
 
-**Play now at [prosingularity.github.io/a-flappy-bird-clone](https://prosingularity.github.io/a-flappy-bird-clone/).**
+**Play now at [prosingularity.github.io/flappy-fly](https://prosingularity.github.io/flappy-fly).**
 
-Arcade retro classic A Flappy Bird Clone.
+Clone of [Flappy bird](https://en.wikipedia.org/wiki/Flappy_Bird), a game developed by Dong Nguyen that went viral in early 2014
+
+## State Machine
+
+[![](https://mermaid.ink/img/eyJjb2RlIjoic3RhdGVEaWFncmFtXG5cdFsqXSAtLT4gTG9hZFxuXHRMb2FkIC0tPiBTdGFydFxuXHRTdGFydCAtLT4gUGxheVxuXHRQbGF5IC0tPiBEZWFkXG5cdERlYWQgLS0-IFN0YXJ0XG5cdFx0XHRcdFx0IiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifSwidXBkYXRlRWRpdG9yIjpmYWxzZX0)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoic3RhdGVEaWFncmFtXG5cdFsqXSAtLT4gTG9hZFxuXHRMb2FkIC0tPiBTdGFydFxuXHRTdGFydCAtLT4gUGxheVxuXHRQbGF5IC0tPiBEZWFkXG5cdERlYWQgLS0-IFN0YXJ0XG5cdFx0XHRcdFx0IiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifSwidXBkYXRlRWRpdG9yIjpmYWxzZX0)
 
 ## Getting started
 
@@ -50,7 +54,7 @@ npm run dev
 
 ## Deployment
 
-Continuous deployment to github pages [https://prosingularity.github.io/a-flappy-bird-clone/](https://prosingularity.github.io/a-flappy-bird-clone/) is performed on each push to `master`.
+Continuous deployment to github pages [https://prosingularity.github.io/flappy-fly/](https://prosingularity.github.io/flappy-fly/) is performed on each push to `master`.
 
 See [.travis.yml](.travis.yml).
 

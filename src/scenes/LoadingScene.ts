@@ -146,14 +146,14 @@ export class LoadingScene extends Scene {
 
     private addTitles() {
         const title = this.add
-            .text(this.halfWidth, this.halfHeight - 200, "A Flappy Bird Clone")
+            .text(this.halfWidth, this.halfHeight - 200, "Flappy Fly")
             .setOrigin(0.5);
         setDefaultTextStyle(title);
         title.setFontSize(112);
         title.setColor(Color.White);
 
         const subtitle = this.add
-            .text(this.halfWidth, this.halfHeight - 120, "by Mirco Kraenz")
+            .text(this.halfWidth, this.halfHeight - 100, "by Mirco Kraenz")
             .setOrigin(0.5);
         setDefaultTextStyle(subtitle);
         subtitle.setColor(Color.White);

@@ -1,10 +1,11 @@
 import { GameObjects, Scene } from "phaser";
 import { Sound } from "../assets/keys";
+import { Color } from "../styles/Color";
 import { TextConfig } from "../styles/Text";
 
 const Cfg = {
-    styles: TextConfig.lg,
-    color: "#424242",
+    styles: TextConfig.md,
+    color: Color.Grey,
     x: 50,
     y: 50,
 };
@@ -20,6 +21,7 @@ export class Score extends GameObjects.Text {
         this.setDepth(1);
         this.setStyle(Cfg.styles);
         this.setColor(Cfg.color);
+        this.setPadding(0, 0, 10, 0); // fixes cut-off final letter
         this.draw();
     }
 

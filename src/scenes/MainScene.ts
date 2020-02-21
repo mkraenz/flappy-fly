@@ -3,6 +3,7 @@ import { Sound } from "../assets/keys";
 import { Background } from "../components/Background";
 import { GameState } from "../components/GameState";
 import { Ground } from "../components/Ground";
+import { HeaderContainer } from "../components/HeaderContainer";
 import { Pipes } from "../components/Pipes";
 import { Player } from "../components/Player";
 import { Score } from "../components/Score";
@@ -15,6 +16,7 @@ export class MainScene extends Scene {
     private state: GameState = GameState.Start;
     private key!: Input.Keyboard.Key;
     private score!: Score;
+    private header!: HeaderContainer;
 
     constructor() {
         super({
@@ -27,6 +29,7 @@ export class MainScene extends Scene {
         this.ground = new Ground(this);
         this.player = new Player(this);
         this.setStartStateInput();
+        this.header = new HeaderContainer(this);
     }
 
     public update() {
@@ -58,6 +61,7 @@ export class MainScene extends Scene {
 
     private play(player: Player) {
         this.state = GameState.Playing;
+        this.header.setVisible(false);
         this.unsetInput();
         player.setPlaying();
 
