@@ -1,7 +1,7 @@
 {
     "name": "a-flappy-bird-clone",
     "version": "1.0.0",
-    "description": "A Flappy Bird Clone - a Phaser 3 game in Typescript",
+    "description": "Flappy Fly - a Phaser 3 Flappy bird clone in Typescript",
     "license": "ISC",
     "scripts": {
         "prebuild": "del-cli build",
