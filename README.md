@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/proSingularity/flappy-fly.svg?branch=master)](https://travis-ci.com/proSingularity/flappy-fly)
 
-# A Flappy Bird Clone
+# Flappy Fly
 
 **Play now at [prosingularity.github.io/flappy-fly](https://prosingularity.github.io/flappy-fly).**
 
