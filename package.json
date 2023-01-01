@@ -39,7 +39,7 @@
         "prettier-tslint": "^0.4.2",
         "sinon": "^7.2.2",
         "sinon-chai": "^3.3.0",
-        "ts-loader": "6.2.0",
+        "ts-loader": "9.4.2",
         "ts-node": "^8.3.0",
         "tslint": "^5.18.0",
         "tslint-config-prettier": "^1.18.0",
@@ -47,13 +47,13 @@
         "tslint-no-focused-test": "^0.5.0",
         "tslint-plugin-prettier": "^2.0.1",
         "typescript": "3.7.5",
-        "webpack": "4.41.0",
-        "webpack-cli": "3.3.9",
+        "webpack": "5.75.0",
+        "webpack-cli": "5.0.1",
         "webpack-dev-server": "3.8.2"
     },
     "dependencies": {
         "lodash": "^4.17.13",
-        "phaser": "^3.18.1"
+        "phaser": "^3.55.2"
     },
     "husky": {
         "hooks": {
